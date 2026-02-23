@@ -2,12 +2,12 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCI1HMsbMccDhlEF_MjlGZd20MNgiWnwHM",
-    authDomain: "galaxy-guest-relations.firebaseapp.com",
-    projectId: "galaxy-guest-relations",
-    storageBucket: "galaxy-guest-relations.firebasestorage.app",
-    messagingSenderId: "153336950963",
-    appId: "1:153336950963:web:7427f1b9583968074940c6"
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 // Initialize Firebase
