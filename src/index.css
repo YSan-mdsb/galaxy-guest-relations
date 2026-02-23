@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+@theme {
+  --color-darkBg: #0a0a0a;
+  --color-neonAmber: #ffb000;
+  --color-crtGreen: #33ff33;
+  --font-mono: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  --animate-pulse-glow: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-scanline: scanline 10s linear infinite;
+
+  @keyframes pulse-glow {
+
+    0%,
+    100% {
+      opacity: 1;
+      filter: drop-shadow(0 0 8px rgba(51, 255, 51, 0.6));
+    }
+
+    50% {
+      opacity: .7;
+      filter: drop-shadow(0 0 2px rgba(51, 255, 51, 0.2));
+    }
+  }
+
+  @keyframes scanline {
+    0% {
+      transform: translateY(-100%);
+    }
+
+    100% {
+      transform: translateY(100vh);
+    }
+  }
+}
+
+@layer base {
+  body {
+    background-color: var(--color-darkBg);
+    color: var(--color-neonAmber);
+    font-family: var(--font-mono);
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    /* Adding subtle crt background pattern */
+    background-image: radial-gradient(circle, #111111 1px, transparent 1px);
+    background-size: 4px 4px;
+  }
+
+  ::selection {
+    background-color: var(--color-crtGreen);
+    color: var(--color-darkBg);
+  }
+}
+
+@layer utilities {
+  .crt-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%,
+        rgba(0, 0, 0, 0.25) 50%);
+    background-size: 100% 4px;
+    z-index: 50;
+    opacity: 0.3;
+  }
+
+  .glow-amber {
+    text-shadow: 0 0 5px rgba(255, 176, 0, 0.5), 0 0 10px rgba(255, 176, 0, 0.3);
+  }
+
+  .glow-green {
+    text-shadow: 0 0 5px rgba(51, 255, 51, 0.5), 0 0 10px rgba(51, 255, 51, 0.3);
+  }
+
+  .box-glow-green {
+    box-shadow: 0 0 10px rgba(51, 255, 51, 0.2), inset 0 0 10px rgba(51, 255, 51, 0.1);
+  }
+
+  .box-glow-amber {
+    box-shadow: 0 0 10px rgba(255, 176, 0, 0.2), inset 0 0 10px rgba(255, 176, 0, 0.1);
+  }
+}
