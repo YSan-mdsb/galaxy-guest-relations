@@ -42,6 +42,8 @@
     overflow: hidden;
     margin: 0;
     padding: 0;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
     /* Adding subtle crt background pattern */
     background-image: radial-gradient(circle, #111111 1px, transparent 1px);
     background-size: 4px 4px;

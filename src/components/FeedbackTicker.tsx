@@ -4,13 +4,14 @@ import { Activity } from 'lucide-react';
 
 interface Props {
     events: GameEvent[];
+    isMobile?: boolean;
 }
 
-export function EventLogConsole({ events }: Props) {
+export function EventLogConsole({ events, isMobile }: Props) {
     const recentEvents = [...events].reverse();
 
     return (
-        <div className="w-80 h-full border-l border-neonAmber/30 bg-darkBg/80 flex flex-col z-10">
+        <div className={`h-full bg-darkBg/80 flex flex-col z-10 ${isMobile ? 'w-full' : 'w-80 border-l border-neonAmber/30'}`}>
             <div className="p-3 border-b border-neonAmber/30 flex items-center gap-2">
                 <Activity size={18} className="text-crtGreen" />
                 <h2 className="text-sm font-bold tracking-widest uppercase">Station Log</h2>
@@ -35,3 +36,4 @@ export function EventLogConsole({ events }: Props) {
         </div>
     );
 }
+

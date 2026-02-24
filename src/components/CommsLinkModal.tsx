@@ -63,7 +63,7 @@ export function CommsLinkModal({ isOpen, guest, onClose, onSubmit }: Props) {
                         initial={{ scale: 0.9, y: 20 }}
                         animate={{ scale: 1, y: 0 }}
                         exit={{ scale: 0.9, y: 20 }}
-                        className="max-w-md w-full border-2 border-neonAmber bg-darkBg p-6 relative shadow-[0_0_30px_rgba(245,158,11,0.3)]"
+                        className="max-w-md w-full border-2 border-neonAmber bg-darkBg p-4 md:p-6 relative shadow-[0_0_30px_rgba(245,158,11,0.3)]"
                         onClick={(e) => e.stopPropagation()}
                     >
                         <button

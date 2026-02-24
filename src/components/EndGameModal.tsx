@@ -66,7 +66,7 @@ export function EndGameModal({ status, nps, credits }: Props) {
             <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className={`max-w-2xl w-full p-8 border-2 text-center relative overflow-hidden my-8 ${isWin ? 'border-crtGreen box-glow-green bg-crtGreen/5' : 'border-red-500 bg-red-500/5 shadow-[0_0_30px_rgba(239,68,68,0.2)]'}`}
+                className={`max-w-2xl w-full p-4 md:p-8 border-2 text-center relative overflow-hidden my-8 ${isWin ? 'border-crtGreen box-glow-green bg-crtGreen/5' : 'border-red-500 bg-red-500/5 shadow-[0_0_30px_rgba(239,68,68,0.2)]'}`}
             >
                 <div className="absolute inset-0 pointer-events-none opacity-30 bg-[linear-gradient(90deg,transparent_25%,currentColor_50%,transparent_75%,transparent_100%)] bg-[length:4px_100%] animate-scanline" style={{ color: isWin ? '#33ff33' : '#ef4444' }} />
 

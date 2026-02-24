@@ -6,10 +6,70 @@ import type { Guest } from '../store/gameState';
 interface Props {
     guest: Guest | null;
     onClose: () => void;
+    isMobile?: boolean;
 }
 
-export function GuestDetailsPanel({ guest, onClose }: Props) {
+export function GuestDetailsPanel({ guest, onClose, isMobile }: Props) {
     if (!guest) return null;
+
+    if (isMobile) {
+        return (
+            <AnimatePresence>
+                <motion.div
+                    initial={{ y: '100%' }}
+                    animate={{ y: 0 }}
+                    exit={{ y: '100%' }}
+                    transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                    className="fixed bottom-0 left-0 right-0 z-[45] max-h-[45vh]"
+                >
+                    <div className="bg-darkBg border-t-2 border-neonAmber/50 backdrop-blur-md shadow-[0_-10px_30px_rgba(0,0,0,0.8)] p-4 relative overflow-y-auto max-h-[45vh]">
+                        {/* Drag handle */}
+                        <div className="flex justify-center mb-3">
+                            <div className="w-10 h-1 rounded-full bg-neonAmber/30" />
+                        </div>
+
+                        <button
+                            onClick={(e) => { e.stopPropagation(); onClose(); }}
+                            className="absolute top-3 right-3 text-neonAmber/50 active:text-neonAmber transition-colors z-50 min-w-[36px] min-h-[36px] flex items-center justify-center"
+                        >
+                            <X size={18} />
+                        </button>
+
+                        <div className="flex items-center gap-3 mb-3 pb-2 border-b border-neonAmber/20">
+                            <div className="p-1.5 border border-neonAmber/30 bg-neonAmber/10 text-neonAmber rounded">
+                                <User size={16} />
+                            </div>
+                            <div>
+                                <h3 className="text-xs font-bold text-neonAmber uppercase tracking-widest leading-none">{guest.name}</h3>
+                                <span className="text-[10px] text-neonAmber/60 font-mono uppercase">{guest.species}</span>
+                            </div>
+                        </div>
+
+                        <div className="space-y-2 font-mono text-xs">
+                            <div className="flex justify-between">
+                                <span className="text-neonAmber/50 uppercase">Disposition:</span>
+                                <span className={`font-bold uppercase ${guest.category === 'Promoter' ? 'text-crtGreen' : guest.category === 'Detractor' ? 'text-red-500' : 'text-neonAmber'}`}>
+                                    {guest.category}
+                                </span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span className="text-neonAmber/50 uppercase">VIP:</span>
+                                <span className="text-neonAmber">{guest.vipTurnsRemaining > 0 ? `Active (${guest.vipTurnsRemaining}T)` : 'None'}</span>
+                            </div>
+                            <div className="mt-3 pt-3 border-t border-neonAmber/20">
+                                <div className="flex items-center gap-1 text-[10px] text-crtGreen uppercase mb-1">
+                                    <Languages size={12} /> Live Translation
+                                </div>
+                                <div className="text-crtGreen glow-green italic break-words leading-relaxed pl-2 border-l-2 border-crtGreen/30">
+                                    "{guest.feedback}"
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
+            </AnimatePresence>
+        );
+    }
 
     return (
         <AnimatePresence>
@@ -73,3 +133,4 @@ export function GuestDetailsPanel({ guest, onClose }: Props) {
         </AnimatePresence>
     );
 }
+

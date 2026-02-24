@@ -14,9 +14,10 @@ interface Props {
     permanentDetractors: number;
     onEndTurn: () => void;
     onHelpClick: () => void;
+    isMobile?: boolean;
 }
 
-export function CommandHeader({ turn, credits, orbs, maxOrbs, nps, permanentDetractors, onEndTurn, onHelpClick }: Props) {
+export function CommandHeader({ turn, credits, orbs, maxOrbs, nps, permanentDetractors, onEndTurn, onHelpClick, isMobile }: Props) {
     const [isMuted, setIsMuted] = useState(audioSystem.isMuted);
 
     const handleMuteToggle = () => {
@@ -30,8 +31,57 @@ export function CommandHeader({ turn, credits, orbs, maxOrbs, nps, permanentDetr
     if (nps > 30) npsColor = 'text-crtGreen';
     else if (nps < 0) npsColor = 'text-red-500';
 
+    if (isMobile) {
+        return (
+            <header className="flex items-center justify-between px-3 py-2 border-b border-neonAmber/30 bg-darkBg/90 backdrop-blur-sm z-10 relative gap-1">
+                {/* NPS */}
+                <div className="flex items-center gap-1">
+                    <ShieldAlert size={14} className={npsColor} />
+                    <AnimatedNumber value={nps} suffix="%" className={`text-sm font-bold ${npsColor}`} />
+                    {permanentDetractors > 0 && (
+                        <span className="text-[8px] text-red-400 font-bold bg-red-900/40 px-1 rounded">-{permanentDetractors}</span>
+                    )}
+                </div>
+
+                {/* Cycle */}
+                <div className="flex items-center gap-1 text-crtGreen text-sm font-bold">
+                    <span>{turn}/10</span>
+                </div>
+
+                {/* Credits */}
+                <div className="flex items-center gap-1 text-neonAmber">
+                    <Coins size={14} />
+                    <AnimatedNumber value={credits} className="text-sm font-bold" />
+                </div>
+
+                {/* Orbs */}
+                <div className="flex items-center gap-1 text-crtGreen">
+                    <Zap size={14} className="fill-current" />
+                    <span className="text-sm font-bold"><AnimatedNumber value={orbs} />/{maxOrbs}</span>
+                </div>
+
+                {/* Action buttons */}
+                <div className="flex items-center gap-1">
+                    <button onClick={onHelpClick} className="p-1.5 text-neonAmber/70 active:text-neonAmber transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center">
+                        <HelpCircle size={18} />
+                    </button>
+                    <button onClick={handleMuteToggle} className="p-1.5 text-neonAmber/70 active:text-neonAmber transition-colors min-w-[36px] min-h-[36px] flex items-center justify-center">
+                        {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+                    </button>
+                    <button
+                        onClick={onEndTurn}
+                        className="flex items-center gap-1 px-2 py-1.5 border border-crtGreen text-crtGreen active:bg-crtGreen/10 transition-colors uppercase font-bold tracking-wider box-glow-green text-xs min-h-[36px]"
+                    >
+                        <FastForward size={14} />
+                        Go
+                    </button>
+                </div>
+            </header>
+        );
+    }
+
     return (
-        <header className="flex items-center justify-between p-4 border-b border-neonAmber/30 bg-darkBg/90 backdrop-blur-sm z-10 relative">
+        <header className="flex items-center justify-between p-4 border-b border-neonAmber/30 bg-darkBg/90 backdrop-blur-sm z-10 relative gap-6 rounded-b-lg">
             <div className="flex items-center gap-6">
                 <div className="flex flex-col">
                     <span className="text-xs uppercase tracking-widest text-neonAmber/70">NPS Override</span>
@@ -97,3 +147,4 @@ export function CommandHeader({ turn, credits, orbs, maxOrbs, nps, permanentDetr
         </header>
     );
 }
+

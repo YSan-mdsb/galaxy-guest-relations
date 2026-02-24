@@ -6,9 +6,13 @@ import { X } from 'lucide-react';
 interface Props {
     isOpen: boolean;
     onClose: () => void;
+    isMobile?: boolean;
 }
 
-export function TutorialOverlay({ isOpen, onClose }: Props) {
+export function TutorialOverlay({ isOpen, onClose, isMobile }: Props) {
+    const actionVerb = isMobile ? 'Tap a card to select it, then tap' : 'Drag';
+    const onto = isMobile ? '' : ' onto';
+
     return (
         <AnimatePresence>
             {isOpen && (
@@ -25,24 +29,24 @@ export function TutorialOverlay({ isOpen, onClose }: Props) {
                         className="max-w-xl w-full max-h-[90vh] flex flex-col border border-crtGreen bg-darkBg/95 relative box-glow-green"
                     >
                         {/* Fixed Header */}
-                        <div className="p-6 pb-4 shrink-0 flex justify-between items-start border-b border-neonAmber/20">
-                            <h2 className="text-2xl font-bold text-crtGreen tracking-widest uppercase">
+                        <div className="p-4 md:p-6 pb-3 md:pb-4 shrink-0 flex justify-between items-start border-b border-neonAmber/20">
+                            <h2 className="text-lg md:text-2xl font-bold text-crtGreen tracking-widest uppercase">
                                 Galactic Director Orientation
                             </h2>
                             <button
                                 onClick={onClose}
-                                className="text-crtGreen hover:text-white transition-colors pt-1"
+                                className="text-crtGreen hover:text-white transition-colors pt-1 min-w-[36px] min-h-[36px] flex items-center justify-center"
                             >
                                 <X size={24} />
                             </button>
                         </div>
 
                         {/* Scrollable Content */}
-                        <div className="p-6 overflow-y-auto space-y-4 text-neonAmber/80 font-mono text-sm leading-relaxed scrollbar-thin scrollbar-thumb-crtGreen scrollbar-track-darkBg">
+                        <div className="p-4 md:p-6 overflow-y-auto space-y-4 text-neonAmber/80 font-mono text-sm leading-relaxed scrollbar-thin scrollbar-thumb-crtGreen scrollbar-track-darkBg">
                             <p>
                                 <strong className="text-neonAmber glow-amber">Inner Loop: Fixing Guests</strong>
                                 <br />
-                                Drag "Bio-Snack" (1 Orb, 10 CR) directly onto a <strong className="text-white">Guest Icon</strong> to instantly boost their status by 1 tier. Nebula-Whales love these and will jump straight to Promoter!
+                                {actionVerb} "Bio-Snack" (1 Orb, 10 CR){onto} a <strong className="text-white">Guest</strong> to instantly boost their status by 1 tier. Nebula-Whales love these and will jump straight to Promoter!
                             </p>
 
                             <hr className="border-neonAmber/20 my-4" />
@@ -50,13 +54,13 @@ export function TutorialOverlay({ isOpen, onClose }: Props) {
                             <p>
                                 <strong className="text-crtGreen glow-green">Outer Loop: Fixing the Station</strong>
                                 <br />
-                                Drag "System Upgrade" (2 Orbs, 60 CR) onto a <strong className="text-white">Room</strong>. This moves all current guests up 1 tier and buffs any future guests spawning there.
+                                {actionVerb} "System Upgrade" (2 Orbs, 60 CR){onto} a <strong className="text-white">Room</strong>. This moves all current guests up 1 tier and buffs any future guests spawning there.
                             </p>
 
                             <p>
                                 <strong className="text-crtGreen glow-green">Slime Management</strong>
                                 <br />
-                                Glip-Glops leak Slime. If a room gathers {'>'}2 Slime, guests inside will drop in tier at the end of the turn! Drag "Scrub Room" onto a room to clean it, or use "Emergency Venting" for a station-wide sweep.
+                                Glip-Glops leak Slime. If a room gathers {'>'}2 Slime, guests inside will drop in tier at the end of the turn! {actionVerb} "Scrub Room"{onto} a room to clean it, or use "Emergency Venting" for a station-wide sweep.
                             </p>
 
                             <hr className="border-neonAmber/20 my-4" />
@@ -64,13 +68,15 @@ export function TutorialOverlay({ isOpen, onClose }: Props) {
                             <p>
                                 <strong className="text-crtGreen glow-green">Guest Profiles & Comms Link</strong>
                                 <br />
-                                Click on any guest to view their <strong>Guest Profile</strong>, which includes a live, AI-translated review of their experience. If a guest is angry, drag a <strong>Comms Link</strong> card onto them to negotiate and improve their mood using natural language!
+                                {isMobile ? 'Tap' : 'Click on'} any guest to view their <strong>Guest Profile</strong>, which includes a live, AI-translated review of their experience. If a guest is angry, {isMobile ? 'select' : 'drag'} a <strong>Comms Link</strong> card {isMobile ? 'and tap them' : 'onto them'} to negotiate and improve their mood using natural language!
                             </p>
 
                             <p className="mt-4">
                                 <strong className="text-crtGreen glow-green">Station Log</strong>
                                 <br />
-                                Keep an eye on the right-side console. It will narrate essential events like guests arriving, Nebula-Whales leaving large tips, and impatient Borgs churning.
+                                {isMobile
+                                    ? 'Switch to the Log tab at the bottom to see essential events like guests arriving, Nebula-Whales leaving large tips, and impatient Borgs churning.'
+                                    : 'Keep an eye on the right-side console. It will narrate essential events like guests arriving, Nebula-Whales leaving large tips, and impatient Borgs churning.'}
                             </p>
 
                             <hr className="border-neonAmber/20 my-4" />
@@ -93,13 +99,13 @@ export function TutorialOverlay({ isOpen, onClose }: Props) {
                             <p>
                                 <strong className="text-crtGreen glow-green">Action Cards</strong>
                                 <br />
-                                From <strong>Bio-Snacks</strong> to <strong>VIP Treatments</strong>, use your Action Cards wisely. You draw back up to 5 cards at the end of each turn, and draw odds dynamically adapt to how your station is doing! You may drag unwanted cards to the incinerator to burn them.
+                                From <strong>Bio-Snacks</strong> to <strong>VIP Treatments</strong>, use your Action Cards wisely. You draw back up to 5 cards at the end of each turn, and draw odds dynamically adapt to how your station is doing! {isMobile ? 'Tap the trash icon to burn unwanted cards.' : 'You may drag unwanted cards to the incinerator to burn them.'}
                             </p>
 
                             <div className="mt-8 pt-4 border-t border-crtGreen/30 text-center">
                                 <button
                                     onClick={onClose}
-                                    className="px-8 py-3 bg-crtGreen/10 border border-crtGreen text-crtGreen font-bold tracking-widest uppercase hover:bg-crtGreen hover:text-darkBg transition-colors"
+                                    className="px-6 md:px-8 py-3 bg-crtGreen/10 border border-crtGreen text-crtGreen font-bold tracking-widest uppercase hover:bg-crtGreen hover:text-darkBg transition-colors min-h-[44px]"
                                 >
                                     Acknowledge Protocol
                                 </button>
@@ -111,3 +117,4 @@ export function TutorialOverlay({ isOpen, onClose }: Props) {
         </AnimatePresence>
     );
 }
+
